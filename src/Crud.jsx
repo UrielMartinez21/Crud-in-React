@@ -11,14 +11,19 @@ const Crud = () => {
   const usuarioVacio = registroVacio
   const data = informacion
 
+  //--> Informacion
+  const [registro, setRegistro] = useState(usuarioVacio);
   const [registros, setRegistros] = useState(null);
+  //--> Modales
   const [mostrarCrear, setMostrarCrear] = useState(false);
   const [mostrarEliminar, setMostrarEliminar] = useState(false);
   const [mostrarEliminarVarios, setMostrarEliminarVarios] = useState(false);
-  const [registro, setRegistro] = useState(usuarioVacio);
-  const [seleccionarRegistros, setSeleccionarRegistros] = useState(null);
-  const [submitted, setSubmitted] = useState(false);
-  const [filtroGlobal, setFiltroGlobal] = useState(null);
+
+  const [seleccionarRegistros, setSeleccionarRegistros] = useState(null);   // Arreglo de registros para eliminar
+  const [submitted, setSubmitted] = useState(false);                        // Validar envio
+  const [filtroGlobal, setFiltroGlobal] = useState(null);                   // Buscador general
+
+  //--> Funciones de transicion
   const toast = useRef(null);
   const dt = useRef(null);
 
@@ -27,7 +32,7 @@ const Crud = () => {
   }, [])
   //--> Modal para crear registro
   const crearRegistro = () => {
-    setRegistro(usuarioVacio);
+    setRegistro(usuarioVacio)
     setSubmitted(false);
     setMostrarCrear(true);
   }
@@ -35,6 +40,7 @@ const Crud = () => {
   const ocultarCrear = () => {
     setSubmitted(false);
     setMostrarCrear(false);
+    setRegistro(usuarioVacio)
   }
   //--> Oculta modal de eliminar registro
   const ocultarEliminar = () => {
@@ -56,13 +62,13 @@ const Crud = () => {
         const index = findIndexById(registro.id);
 
         _registros[index] = _registro;
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Registro Actualizado', life: 3000 });
+        toast.current.show({ severity: 'success', summary: 'Correcto!', detail: 'Registro Actualizado', life: 3000 });
       }
       else {
         _registro.id = createId();
         _registro.image = 'product-placeholder.svg';
         _registros.push(_registro);
-        toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Registro Creado', life: 3000 });
+        toast.current.show({ severity: 'success', summary: 'Correcto!', detail: 'Registro Creado', life: 3000 });
       }
 
       setRegistros(_registros);
@@ -70,11 +76,13 @@ const Crud = () => {
       setRegistro(usuarioVacio);
     }
   }
+  //------------------| Edicion de registro |------------------
   //--> Modal de crear con informacion de registro
   const editarRegistro = (registro) => {
     setRegistro({ ...registro });
     setMostrarCrear(true);
   }
+  //------------------| Eliminar registro |------------------
   //--> Modal para eliminar registro
   const confirmarEliminarRegistro = (registro) => {
     setRegistro(registro);
@@ -86,8 +94,9 @@ const Crud = () => {
     setRegistros(_registros);
     setMostrarEliminar(false);
     setRegistro(registroVacio);
-    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Registro Eliminado', life: 3000 });
+    toast.current.show({ severity: 'success', summary: 'Correcto!', detail: 'Registro Eliminado', life: 3000 });
   }
+  //------------------| Funciones de exportar e importar |------------------
   //--> Funcion para importar
   const importarCSV = () => {
     console.log("Importar")
@@ -96,8 +105,10 @@ const Crud = () => {
   const exportarCSV = () => {
     console.log("Exportar")
   }
+  //------------------| Eliminar varios registros |------------------
   //--> Mostrar modal para eliminar registros
   const confirmarEliminarVarios = () => {
+    console.log(seleccionarRegistros)
     setMostrarEliminarVarios(true)
   }
   //--> Funcion para eliminar registros
@@ -106,7 +117,7 @@ const Crud = () => {
     setRegistros(_registros);
     setMostrarEliminarVarios(false);
     setSeleccionarRegistros(null);
-    toast.current.show({ severity: 'success', summary: 'Successful', detail: 'Registros Eliminados', life: 3000 });
+    toast.current.show({ severity: 'success', summary: 'Correcto!', detail: 'Registros Eliminados', life: 3000 });
   }
 
   // const onCategoryChange = (e) => {
@@ -132,7 +143,7 @@ const Crud = () => {
 
     setRegistro(_registro);
   }
-
+  //------------------| Valor que se mostrara |------------------
   return (
     <div className="datatable-crud-demo">
       <Toast ref={toast} />
