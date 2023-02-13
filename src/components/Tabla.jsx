@@ -67,7 +67,7 @@ const Tabla = ({
       <Toolbar className="mb-4" left={botonesIzquierda} right={botonesDerecha}></Toolbar>
 
       <DataTable ref={dt} value={registros} selection={seleccionarRegistros} onSelectionChange={(e) => setSeleccionarRegistros(e.value)}
-        dataKey="id" paginator rows={5} rowsPerPageOptions={[5, 10, 15]}
+        showGridlines paginator rows={5} rowsPerPageOptions={[5, 10, 15]}
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} registros"
         globalFilter={filtroGlobal} header={header} responsiveLayout="scroll"

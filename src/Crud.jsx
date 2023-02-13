@@ -11,15 +11,15 @@ const Crud = () => {
   const usuarioVacio = registroVacio
   const data = informacion
 
-  //--> Informacion
-  const [registro, setRegistro] = useState(usuarioVacio);
-  const [registros, setRegistros] = useState(null);
+  //--> Manipulacion de registros
+  const [registro, setRegistro] = useState(usuarioVacio)
+  const [registros, setRegistros] = useState(null)
+  const [seleccionarRegistros, setSeleccionarRegistros] = useState(null)
   //--> Modales
-  const [mostrarCrear, setMostrarCrear] = useState(false);
+  const [mostrarCrear, setMostrarCrear] = useState(false)
   const [mostrarEliminar, setMostrarEliminar] = useState(false);
   const [mostrarEliminarVarios, setMostrarEliminarVarios] = useState(false);
 
-  const [seleccionarRegistros, setSeleccionarRegistros] = useState(null);   // Arreglo de registros para eliminar
   const [submitted, setSubmitted] = useState(false);                        // Validar envio
   const [filtroGlobal, setFiltroGlobal] = useState(null);                   // Buscador general
 
@@ -145,7 +145,7 @@ const Crud = () => {
   }
   //------------------| Valor que se mostrara |------------------
   return (
-    <div className="datatable-crud-demo">
+    <div className="">
       <Toast ref={toast} />
 
       <Tabla
