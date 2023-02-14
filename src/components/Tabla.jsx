@@ -1,4 +1,5 @@
 import React from 'react'
+import useBotones from '../hooks/useBotones'
 
 import { Column } from 'primereact/column'
 import { Button } from 'primereact/button'
@@ -31,22 +32,18 @@ const Tabla = ({
   }
 
   //--> Exportar o importar
-  const botonesDerecha = () => {
-    return (
-      <>
-        <Button label="Importar" icon="pi pi-upload" className="p-button-help" onClick={importarCSV} />
-        <Button label="Exportar" icon="pi pi-upload" className="p-button-help" onClick={exportarCSV} />
-      </>
-    )
-  }
+  const [botonesDerecha] = useBotones(
+    "Importar", "pi pi-upload", "p-button-help", importarCSV,
+    "Exportar", "pi pi-upload", "p-button-help", exportarCSV
+  )
 
   //--> Editar o eliminar
   const accionRegistro = (rowData) => {
     return (
-      <React.Fragment>
+      <>
         <Button icon="pi pi-pencil" className="p-button-rounded p-button-success mr-2" onClick={() => editarRegistro(rowData)} />
         <Button icon="pi pi-trash" className="p-button-rounded p-button-warning" onClick={() => confirmarEliminarRegistro(rowData)} />
-      </React.Fragment>
+      </>
     );
   }
 
