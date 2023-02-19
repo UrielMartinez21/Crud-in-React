@@ -52,29 +52,22 @@ const Crud = () => {
   }
   //--> Funcion para guardar registro
   const guardarRegistro = () => {
-    console.log(registro)
+    // console.log(registro)
     setSubmitted(true);
 
-    if (registro.name) {
-      let _registros = [...registros];
-      let _registro = { ...registro };
-      if (registro.id) {
-        const index = findIndexById(registro.id);
-
-        _registros[index] = _registro;
-        toast.current.show({ severity: 'success', summary: 'Correcto!', detail: 'Registro Actualizado', life: 3000 });
-      }
-      else {
-        _registro.id = createId();
-        _registro.image = 'product-placeholder.svg';
-        _registros.push(_registro);
-        toast.current.show({ severity: 'success', summary: 'Correcto!', detail: 'Registro Creado', life: 3000 });
-      }
-
-      setRegistros(_registros);
-      setMostrarCrear(false);
-      setRegistro(usuarioVacio);
+    if (registro.nombre) {
+      const arregloModificado = registros.map((regis) => regis.id === registro.id ? registro : regis)
+      setRegistros(arregloModificado)
+      toast.current.show({ severity: 'success', summary: 'Correcto!', detail: 'Registro Actualizado', life: 3000 });
     }
+    else {
+      const arregloNuevo = [...registros, registro]
+      setRegistros(arregloNuevo)
+      toast.current.show({ severity: 'success', summary: 'Correcto!', detail: 'Registro Creado', life: 3000 });
+    }
+
+    setMostrarCrear(false);
+    setRegistro(usuarioVacio);
   }
   //------------------| Edicion de registro |------------------
   //--> Modal de crear con informacion de registro
@@ -108,7 +101,7 @@ const Crud = () => {
   //------------------| Eliminar varios registros |------------------
   //--> Mostrar modal para eliminar registros
   const confirmarEliminarVarios = () => {
-    console.log(seleccionarRegistros)
+    // console.log(seleccionarRegistros)
     setMostrarEliminarVarios(true)
   }
   //--> Funcion para eliminar registros

@@ -32,9 +32,9 @@ const Crear = ({ registro, submitted, onInputChange, mostrarCrear, ocultarCrear,
         {submitted && !registro.nombre && <small className="p-error">El nombre es requerido.</small>}
       </div>
       <div className="field">
-        <label htmlFor="nombre">Nombre</label>
+        <label htmlFor="apellido">Apellido</label>
         <InputText
-          id="nombre"
+          id="apellido"
           value={registro.apellido} onChange={(e) => onInputChange(e, 'apellido')}
           required autoFocus className={classNames({ 'p-invalid': submitted && !registro.name })} />
       </div>
