@@ -20,8 +20,8 @@ const Crud = () => {
   const [mostrarEliminar, setMostrarEliminar] = useState(false);
   const [mostrarEliminarVarios, setMostrarEliminarVarios] = useState(false);
 
-  const [submitted, setSubmitted] = useState(false);                        // Validar envio
-  const [filtroGlobal, setFiltroGlobal] = useState(null);                   // Buscador general
+  const [envio, setEnvio] = useState(true)                          // Validar envio
+  const [filtroGlobal, setFiltroGlobal] = useState(null);           // Buscador general
 
   //--> Funciones de transicion
   const toast = useRef(null);
@@ -33,33 +33,36 @@ const Crud = () => {
   //--> Modal para crear registro
   const crearRegistro = () => {
     setRegistro(usuarioVacio)
-    setSubmitted(false);
+    setEnvio(true);
     setMostrarCrear(true);
   }
   //--> Oculta modal de crear
   const ocultarCrear = () => {
-    setSubmitted(false);
+    setEnvio(true);
     setMostrarCrear(false);
     setRegistro(usuarioVacio)
   }
   //--> Oculta modal de eliminar registro
-  const ocultarEliminar = () => {
-    setMostrarEliminar(false);
-  }
+  const ocultarEliminar = () => { setMostrarEliminar(false) }
   //--> Oculta modal de eliminar registros
-  const ocultarEliminarVarios = () => {
-    setMostrarEliminarVarios(false);
-  }
+  const ocultarEliminarVarios = () => { setMostrarEliminarVarios(false) }
   //--> Funcion para guardar registro
   const guardarRegistro = () => {
-    // console.log(registro)
-    setSubmitted(true);
-
+    //--> Validar campos
+    if (Object.values(registro).includes('')) {
+      setEnvio(false)
+      setTimeout(() => {
+        setEnvio(true)
+      }, 2000);
+      return
+    }
+    //--> Actualizar registro
     if (registro.nombre) {
       const arregloModificado = registros.map((regis) => regis.id === registro.id ? registro : regis)
       setRegistros(arregloModificado)
       toast.current.show({ severity: 'success', summary: 'Correcto!', detail: 'Registro Actualizado', life: 3000 });
     }
+    //--> Crear registros
     else {
       const arregloNuevo = [...registros, registro]
       setRegistros(arregloNuevo)
@@ -138,7 +141,7 @@ const Crud = () => {
   }
   //------------------| Valor que se mostrara |------------------
   return (
-    <div className="">
+    <div className='card'>
       <Toast ref={toast} />
 
       <Tabla
@@ -156,8 +159,8 @@ const Crud = () => {
         confirmarEliminarRegistro={confirmarEliminarRegistro} />
 
       <Crear
+        envio={envio}
         registro={registro}
-        submitted={submitted}
         mostrarCrear={mostrarCrear}
         ocultarCrear={ocultarCrear}
         onInputChange={onInputChange}
